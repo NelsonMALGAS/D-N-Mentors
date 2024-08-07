@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kelebogile Doctor Modisane & Nelson Zongezile Malgas Tutor and Mentor Organization
 
-## Getting Started
+## About Us
 
-First, run the development server:
+We are a comprehensive educational service provider specializing in tutoring and mentoring services for students across various subjects, including business, finance, economics, public administration, and project management.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Our Services
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Key Concept Questions (KCQs)
+- Exams preparation
+- Assignments assistance
+- Project guidance
+- Private classes
+- Homework support
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Our Mission
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To provide high-quality, personalized academic support to students, empowering them to achieve excellence in their studies.
 
-## Learn More
+## Get Started
 
-To learn more about Next.js, take a look at the following resources:
+- Contact us to book a session with one of our experienced tutors
+- Visit our website for more information on our services and pricing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Team
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Kelebogile Doctor Modisane, Co-founder
+- Nelson Zongezile Malgas, Co-founder
 
-## Deploy on Vercel
+Contact Us
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Email: [nelson@codespace.co.za] or [dmodisane@eastplats.co.za]
+- Phone: [062 750 0236] or [079 668 7324]
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Social Media
+
+- Follow us on [insert social media platforms]
