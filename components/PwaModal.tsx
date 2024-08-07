@@ -9,8 +9,8 @@ const PwaModal: React.FC<PwaModalProps> = ({ onInstall, onClose, show }) => {
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="bg-white w-96 p-4 rounded-lg shadow-lg relative z-10">
+      <div className="fixed inset-0 flex items-center justify-center z-50 m-4">
+        <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative z-10">
           <h2 className="text-lg font-semibold mb-2 text-black">Install the App</h2>
           <p className="text-sm mb-4 text-black">
             Click on the button below to install the app on your device

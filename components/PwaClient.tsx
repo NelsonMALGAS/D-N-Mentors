@@ -51,7 +51,7 @@ export default function PwaModalClient() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="p-24">
       <PwaModal onInstall={handleInstall} onClose={handleClose} show={show} />
     </main>
   );
