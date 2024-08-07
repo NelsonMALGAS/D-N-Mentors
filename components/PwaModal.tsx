@@ -1,8 +1,6 @@
 "use client";
 
-import { PwaModalProps } from "@/app/page";
-
-
+import { PwaModalProps } from "./PwaClient";
 
 const PwaModal: React.FC<PwaModalProps> = ({ onInstall, onClose, show }) => {
   const blurBackground = show ? "backdrop-blur" : "";
