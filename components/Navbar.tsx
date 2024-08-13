@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   const handleLoginClick = () => {
-    router.push("/login");
+    router.push("/");
   };
 
   const handleSignUpClick = () => {

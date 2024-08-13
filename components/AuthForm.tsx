@@ -10,7 +10,6 @@ const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  // Effect to handle showing the error toast if there's an error
   useEffect(() => {
     if (error) {
       toast.error(`Error: ${error}`);
@@ -18,18 +17,17 @@ const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
 
     if(success){
       toast.success(success as string);
+      router.push("/")
     }
-  }, [error , success]);
+  }, [error , success , router]);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
     try {
       if (mode === "login") {
         await handleLogin();
-        router.push("/");
       } else if (mode === "signup") {
         await handleSignUp();
-        router.push("/");
       }
     } catch (err) {
       console.error(error);
