@@ -1,13 +1,15 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
 import { getAnalytics, Analytics } from "firebase/analytics";
-import { getAuth, Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, Auth } from "firebase/auth";
 import { getStorage, FirebaseStorage } from "firebase/storage";
 import { FirebaseConfig } from "@/types/types";
+import { Firestore, getFirestore } from "firebase/firestore";
 
 let app: FirebaseApp;
 let analytics: Analytics;
 let auth: Auth;
 let storage: FirebaseStorage;
+let firestore: Firestore;
 
 if (typeof window !== 'undefined') {
   // Your Firebase configuration object
@@ -25,47 +27,12 @@ if (typeof window !== 'undefined') {
   app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
   auth = getAuth(app);
+  firestore = getFirestore(app);
   storage = getStorage(app);
 }
 
-const signup = async (email: string, password: string) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log("User signed up:", user);
-    return user;
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error("Error signing up:", errorCode, errorMessage);
-    throw error;
-  }
-};
 
-const login = async (email: string, password: string) => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    console.log("User logged in:", user);
-    return user;
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error("Error logging in:", errorCode, errorMessage);
-    throw error;
-  }
-};
 
-const logout = async () => {
-  try {
-    await signOut(auth);
-    console.log("User signed out");
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error("Error signing out:", errorCode, errorMessage);
-    throw error;
-  }
-};
 
-export { app, analytics, auth, storage, signup, login, logout };
+
+export { app, analytics, auth, storage , firestore };
