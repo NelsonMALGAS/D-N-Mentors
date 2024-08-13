@@ -1,0 +1,313 @@
+"use client";
+
+import { useState } from "react";
+import { FiMenu, FiX, FiBell } from "react-icons/fi";
+import Link from "next/link";
+import Image from "next/image";
+import useAuth from "../hooks/useAuth";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { toast} from "react-toastify"
+
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const { user, handleLogout } = useAuth();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
+    setShowUserMenu(!showUserMenu);
+  };
+
+  const toggleUserMenu = () => {
+    setShowUserMenu(!showUserMenu);
+  };
+
+  const handleLoginClick = () => {
+    router.push("/login");
+  };
+
+  const handleSignUpClick = () => {
+    router.push("/sign-up");
+  };
+
+  return (
+    <nav className="bg-gray-800 relative">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between">
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            {/* Mobile menu button */}
+            <button
+              type="button"
+              className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-controls="mobile-menu"
+              aria-expanded={isMenuOpen}
+              onClick={toggleMenu}
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMenuOpen ? (
+                <FiX className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <FiMenu className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex flex-shrink-0 items-center">
+              <Image
+                className="h-9 w-auto"
+                src="/favicon-16x16.png"
+                alt="Your Company"
+                width={32}
+                height={32}
+              />
+            </div>
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                <Link href="/">
+                  <span
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                      pathname === "/" ? "bg-gray-900" : ""
+                    }`}
+                    aria-current="page"
+                  >
+                    Home
+                  </span>
+                </Link>
+                <Link href="/dashboard">
+                  <span
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                      pathname === "/dashboard" ? "bg-gray-900" : ""
+                    }`}
+                  >
+                    Dashboard
+                  </span>
+                </Link>
+                <Link href="/bookings">
+                  <span
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                      pathname === "/bookings" ? "bg-gray-900" : ""
+                    }`}
+                  >
+                    Bookings
+                  </span>
+                </Link>
+                <Link href="/courses">
+                  <span
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                      pathname === "/courses" ? "bg-gray-900" : ""
+                    }`}
+                  >
+                    Courses
+                  </span>
+                </Link>
+                <Link href="/about">
+                  <span
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                      pathname === "/about" ? "bg-gray-900" : ""
+                    }`}
+                  >
+                    About
+                  </span>
+                </Link>
+                {user ? (
+                  <button
+                    onClick={
+                      () =>{
+                        handleLogout()
+                        toast.info(`${user.email} logged out`)
+                        router.push('/login')
+                      }
+                    }
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={handleLoginClick}
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    >
+                      Login
+                    </button>
+                    <button
+                      onClick={handleSignUpClick}
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    >
+                      Sign Up
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <button
+              type="button"
+              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              onClick={toggleNotifications}
+            >
+              <span className="sr-only">View notifications</span>
+              <FiBell className="h-6 w-6" aria-hidden="true" />
+            </button>
+
+            {user && (
+              <div className="relative ml-3">
+                <div>
+                  <button
+                    type="button"
+                    className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    id="user-menu-button"
+                    aria-expanded={showUserMenu}
+                    aria-haspopup="true"
+                    onClick={toggleUserMenu}
+                  >
+                    <span className="sr-only">Open user menu</span>
+                    <Image
+                      className="h-16 w-16 rounded-full"
+                      src="https://via.placeholder.com/64x64.png?text=Profile"
+                      
+                      alt="Profile Picture"
+                      width={64}
+                      height={64}
+                      priority
+                    />
+                  </button>
+                </div>
+
+                {showUserMenu && (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                  >
+                    <Link href="/profile">
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                      >
+                        Your Profile
+                      </span>
+                    </Link>
+                    <Link href="/settings">
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700"
+                        role="menuitem"
+                      >
+                        Settings
+                      </span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700"
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile menu, show/hide based on menu state. */}
+      <div
+        className={`fixed inset-y-0 right-0 w-64 bg-gray-800 text-white transform transition-transform ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        id="mobile-menu"
+      >
+        <div className="flex items-center justify-between p-4">
+          <h2 className="text-lg font-semibold">Menu</h2>
+          <button type="button" className="text-white" onClick={toggleMenu}>
+            <FiX className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="px-2 pb-3 pt-2 space-y-1">
+          <Link href="/">
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/" ? "bg-gray-900" : "hover:bg-gray-700"
+              }`}
+              aria-current="page"
+            >
+              Home
+            </span>
+          </Link>
+          <Link href="/dashboard">
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/dashboard" ? "bg-gray-900" : "hover:bg-gray-700"
+              }`}
+            >
+              Dashboard
+            </span>
+          </Link>
+          <Link href="/bookings">
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/bookings" ? "bg-gray-900" : "hover:bg-gray-700"
+              }`}
+            >
+              Bookings
+            </span>
+          </Link>
+          <Link href="/courses">
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/courses" ? "bg-gray-900" : "hover:bg-gray-700"
+              }`}
+            >
+              Courses
+            </span>
+          </Link>
+          <Link href="/about">
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/about" ? "bg-gray-900" : "hover:bg-gray-700"
+              }`}
+            >
+              About
+            </span>
+          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <button
+                onClick={handleLoginClick}
+                className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
+              >
+                Login
+              </button>
+              <button
+                onClick={handleSignUpClick}
+                className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
