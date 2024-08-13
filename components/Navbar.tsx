@@ -7,7 +7,7 @@ import Image from "next/image";
 import useAuth from "../hooks/useAuth";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { toast} from "react-toastify"
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 relative">
+    <nav className="bg-gray-800 relative p-8">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -63,11 +63,11 @@ const Navbar = () => {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
               <Image
-                className="h-9 w-auto"
-                src="/favicon-16x16.png"
+                className="h-16 w-16 rounded-full"
+                src="/images/logo-pic.jpeg"
                 alt="Your Company"
-                width={32}
-                height={32}
+                width={64}
+                height={64}
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -120,13 +120,11 @@ const Navbar = () => {
                 </Link>
                 {user ? (
                   <button
-                    onClick={
-                      () =>{
-                        handleLogout()
-                        toast.info(`${user.email} logged out`)
-                        router.push('/login')
-                      }
-                    }
+                    onClick={() => {
+                      handleLogout();
+                      toast.info(`${user.email} logged out`);
+                      router.push("/login");
+                    }}
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >
                     Logout
@@ -175,7 +173,6 @@ const Navbar = () => {
                     <Image
                       className="h-16 w-16 rounded-full"
                       src="https://via.placeholder.com/64x64.png?text=Profile"
-                      
                       alt="Profile Picture"
                       width={64}
                       height={64}
