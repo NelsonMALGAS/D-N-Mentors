@@ -63,7 +63,7 @@ const Navbar = () => {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
               <Image
-                className="h-16 w-16 rounded-full"
+                className="h-20 w-20 rounded-full"
                 src="/images/logo-pic.jpeg"
                 alt="Your Company"
                 width={64}
@@ -71,10 +71,10 @@ const Navbar = () => {
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 items-center justify-center">
                 <Link href="/">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
                       pathname === "/" ? "bg-gray-900" : ""
                     }`}
                     aria-current="page"
@@ -84,7 +84,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/dashboard">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
                       pathname === "/dashboard" ? "bg-gray-900" : ""
                     }`}
                   >
@@ -93,7 +93,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/bookings">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
                       pathname === "/bookings" ? "bg-gray-900" : ""
                     }`}
                   >
@@ -102,7 +102,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/courses">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
                       pathname === "/courses" ? "bg-gray-900" : ""
                     }`}
                   >
@@ -111,7 +111,7 @@ const Navbar = () => {
                 </Link>
                 <Link href="/about">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white ${
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
                       pathname === "/about" ? "bg-gray-900" : ""
                     }`}
                   >
@@ -125,7 +125,7 @@ const Navbar = () => {
                       toast.info(`${user.email} logged out`);
                       router.push("/login");
                     }}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm bg-gray-600 font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >
                     Logout
                   </button>
@@ -190,7 +190,7 @@ const Navbar = () => {
                   >
                     <Link href="/profile">
                       <span
-                        className="block px-4 py-2 text-sm text-gray-700"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
                         Your Profile
@@ -198,7 +198,7 @@ const Navbar = () => {
                     </Link>
                     <Link href="/settings">
                       <span
-                        className="block px-4 py-2 text-sm text-gray-700"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
                         Settings
@@ -220,7 +220,7 @@ const Navbar = () => {
 
       {/* Mobile menu, show/hide based on menu state. */}
       <div
-        className={`fixed inset-y-0 right-0 w-64 bg-gray-800 text-white transform transition-transform ${
+        className={`fixed inset-y-0 right-0 w-64 bg-gray-800 bg-opacity-50 text-white transform transition-transform backdrop-blur ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         id="mobile-menu"
@@ -232,7 +232,7 @@ const Navbar = () => {
           </button>
         </div>
         <div className="px-2 pb-3 pt-2 space-y-1">
-          <Link href="/">
+          <Link href="/" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
                 pathname === "/" ? "bg-gray-900" : "hover:bg-gray-700"
@@ -242,7 +242,7 @@ const Navbar = () => {
               Home
             </span>
           </Link>
-          <Link href="/dashboard">
+          <Link href="/dashboard" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
                 pathname === "/dashboard" ? "bg-gray-900" : "hover:bg-gray-700"
@@ -251,7 +251,7 @@ const Navbar = () => {
               Dashboard
             </span>
           </Link>
-          <Link href="/bookings">
+          <Link href="/bookings" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
                 pathname === "/bookings" ? "bg-gray-900" : "hover:bg-gray-700"
@@ -260,7 +260,7 @@ const Navbar = () => {
               Bookings
             </span>
           </Link>
-          <Link href="/courses">
+          <Link href="/courses" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
                 pathname === "/courses" ? "bg-gray-900" : "hover:bg-gray-700"
@@ -269,7 +269,7 @@ const Navbar = () => {
               Courses
             </span>
           </Link>
-          <Link href="/about">
+          <Link href="/about" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
                 pathname === "/about" ? "bg-gray-900" : "hover:bg-gray-700"
