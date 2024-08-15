@@ -4,22 +4,24 @@ import { useState, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
+import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
   const { email, setEmail, password, setPassword, handleLogin, handleSignUp, error, success } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     if (error) {
       toast.error(`Error: ${error}`);
-    } 
-
-    if(success){
-      toast.success(success as string);
-      router.push("/")
     }
-  }, [error , success , router]);
+
+    if (success) {
+      toast.success(success as string);
+      router.push("/");
+    }
+  }, [error, success, router]);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -30,7 +32,7 @@ const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
         await handleSignUp();
       }
     } catch (err) {
-      console.error(error);
+      console.error(err);
     } finally {
       setIsSubmitting(false);
     }
@@ -47,13 +49,22 @@ const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
           placeholder="Email"
           className="block w-full mb-4 px-3 py-2 border border-gray-300 rounded"
         />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="block w-full mb-4 px-3 py-2 border border-gray-300 rounded"
-        />
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="block w-full px-3 py-2 border border-gray-300 rounded"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(prev => !prev)}
+            className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+          >
+            {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
+          </button>
+        </div>
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}

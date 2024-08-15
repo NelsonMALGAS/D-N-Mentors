@@ -16,7 +16,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const { user, handleLogout } = useAuth();
+  const { user, handleLogout, isAdmin } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -82,15 +82,19 @@ const Navbar = () => {
                     Home
                   </span>
                 </Link>
-                <Link href="/dashboard">
-                  <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
-                      pathname === "/dashboard" ? "bg-gray-900" : ""
-                    }`}
-                  >
-                    Dashboard
-                  </span>
-                </Link>
+                {user && isAdmin(user.email) && (
+                  <Link href="/dashboard">
+                    <span
+                      className={`block rounded-md px-3 py-2 text-white font-medium ${
+                        pathname === "/dashboard"
+                          ? "bg-gray-900"
+                          : ""
+                      }`}
+                    >
+                      Dashboard
+                    </span>
+                  </Link>
+                )}
                 <Link href="/bookings">
                   <span
                     className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
@@ -242,15 +246,19 @@ const Navbar = () => {
               Home
             </span>
           </Link>
-          <Link href="/dashboard" onClick={toggleMenu}>
-            <span
-              className={`block rounded-md px-3 py-2 text-base font-medium ${
-                pathname === "/dashboard" ? "bg-gray-900" : "hover:bg-gray-700"
-              }`}
-            >
-              Dashboard
-            </span>
-          </Link>
+          {user && isAdmin(user.email) && (
+            <Link href="/dashboard" onClick={toggleMenu}>
+              <span
+                className={`block rounded-md px-3 py-2 text-white font-medium ${
+                  pathname === "/dashboard"
+                    ? "bg-gray-900"
+                    : ""
+                }`}
+              >
+                Dashboard
+              </span>
+            </Link>
+          )}
           <Link href="/bookings" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${

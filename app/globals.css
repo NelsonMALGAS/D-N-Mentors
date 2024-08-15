@@ -2,4 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.settings-page {
+    @apply flex flex-col lg:flex-row;
+  }
+  
+  .tabs {
+    @apply lg:w-1/4 flex flex-col space-y-2;
+  }
+  
+  .content {
+    @apply lg:w-3/4 p-4;
+  }
+  
+  .tabs button {
+    @apply p-2 text-left hover:bg-gray-200 dark:hover:bg-gray-800;
+  }
+  

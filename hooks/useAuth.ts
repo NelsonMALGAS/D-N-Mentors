@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { onAuthStateChanged, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, firestore } from "../firebase/firebaseConfig";
 import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
@@ -10,20 +10,19 @@ const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [adminEmails, setAdminEmails] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchAdminEmails = async () => {
-      const adminEmails: string[] = [];
+      const adminEmailsList: string[] = [];
       const adminsSnapshot = await getDocs(collection(firestore, "admins"));
       adminsSnapshot.forEach((doc) => {
         const adminData = doc.data();
         if (adminData.email) {
-          adminEmails.push(adminData.email);
+          adminEmailsList.push(adminData.email);
         }
       });
-      setAdminEmails(adminEmails);
+      setAdminEmails(adminEmailsList);
     };
 
     fetchAdminEmails();
@@ -34,12 +33,10 @@ const useAuth = () => {
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          setIsAdmin(adminEmails.includes(user.email || ""));
+          setUser(user);
         }
-        setUser(user);
       } else {
         setUser(null);
-        setIsAdmin(false);
       }
       setLoading(false);
     });
@@ -47,14 +44,18 @@ const useAuth = () => {
     return () => unsubscribe();
   }, []);
 
+  const isAdmin = useCallback((email: string | null): email is string => {
+    return email !== null && adminEmails.includes(email);
+  }, [adminEmails]);
+
   const handleSignUp = async () => {
     setLoading(true);
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      const isAdmin = adminEmails.includes(user.email || "");
+      const isAdminFlag = adminEmails.includes(user.email || "");
       await setDoc(doc(firestore, "users", user.uid), {
         email: user.email,
-        isAdmin: isAdmin,
+        isAdmin: isAdminFlag,
       });
       setUser(user);
       setEmail("");
@@ -79,7 +80,6 @@ const useAuth = () => {
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        setIsAdmin(userData.isAdmin || false);
       }
       setUser(user);
       setEmail("");
@@ -114,7 +114,6 @@ const useAuth = () => {
 
   return {
     user,
-    isAdmin,
     email,
     setEmail,
     password,
@@ -122,6 +121,7 @@ const useAuth = () => {
     handleLogin,
     handleSignUp,
     handleLogout,
+    isAdmin,
     error,
     success,
     loading,

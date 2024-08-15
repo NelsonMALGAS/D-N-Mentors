@@ -1,7 +1,12 @@
+"use client"
+
+import Bookings from "@/components/Bookings"
 
 const BookingsPage = () => {
   return (
-    <div>BookingsPage</div>
+    <div>
+      <Bookings/>
+    </div>
   )
 }
 
