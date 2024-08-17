@@ -68,7 +68,7 @@ const Dashboard = () => {
 
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center h-full p-4 text-center">
+      <div className="flex flex-col items-center justify-center min-h-full p-4 text-center">
         <FaSignInAlt className="text-6xl text-gray-500 mb-4" />
         <p className="text-2xl font-semibold text-gray-700 mb-2">
           Please log in to view your bookings
@@ -81,8 +81,8 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 flex items-center justify-center">My Bookings</h1>
+    <div className="p-4 min-h-full">
+      <h1 className="text-3xl font-bold mb-4 flex items-center justify-center text-white">My Bookings</h1>
 
       {bookings.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full p-4 text-center">
@@ -96,8 +96,8 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-800 text-white">
+          <table className="min-w-full min-h-full divide-y divide-gray-200">
+            <thead className="bg-gray-900 text-white">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                   Service
@@ -125,37 +125,37 @@ const Dashboard = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-gray-800 divide-y divide-gray-200">
               {bookings.map((booking) => (
                 <tr
                   key={booking.id}
-                  className={isDueSoon(booking.dueDate) ? "bg-red-100" : ""}
+                  className={isDueSoon(booking.dueDate) ? "bg-red-500" : ""}
                 >
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {booking.service}
                   </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {booking.name}
                   </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {booking.email}
                   </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {booking.description}
                   </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {booking.dueDate
                       ? new Date(
                           booking.dueDate.seconds * 1000
                         ).toLocaleDateString()
                       : "N/A"}
                   </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {new Date(
                       booking.createdAt.seconds * 1000
                     ).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 truncate">
+                  <td className="px-4 py-2 text-sm text-white truncate">
                     {booking.status ? booking.status : "Pending"}
                   </td>
                   <td className="px-4 py-2 text-sm text-gray-900 flex space-x-2">

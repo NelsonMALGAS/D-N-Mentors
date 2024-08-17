@@ -33,8 +33,8 @@ const Contact = () => {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
+    <div className="p-6 max-w-md mx-auto bg-gray-800 shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold mb-4 text-white">Contact Us</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {success && <p className="text-green-600">{success}</p>}
         {error && <p className="text-red-600">{error}</p>}
@@ -46,7 +46,8 @@ const Contact = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded w-full"
+            className="mt-1 p-2 border border-gray-300 rounded w-full bg-transparent"
+            placeholder='Name'
             required
           />
         </div>
@@ -58,7 +59,8 @@ const Contact = () => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded w-full"
+            className="mt-1 p-2 border border-gray-300 rounded w-full bg-transparent"
+            placeholder='example@gmail.com'
             required
           />
         </div>
@@ -69,7 +71,8 @@ const Contact = () => {
             id="message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded w-full"
+            className="mt-1 p-2 border border-gray-300 rounded w-full bg-transparent"
+            placeholder='Message...'
             rows={4}
             required
           />

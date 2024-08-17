@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 relative p-8">
+    <nav className="bg-gray-900 relative p-8">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -74,8 +74,8 @@ const Navbar = () => {
               <div className="flex space-x-4 items-center justify-center">
                 <Link href="/">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
-                      pathname === "/" ? "bg-gray-900" : ""
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-800 ${
+                      pathname === "/" ? "bg-gray-800" : ""
                     }`}
                     aria-current="page"
                   >
@@ -85,10 +85,8 @@ const Navbar = () => {
                 {user && isAdmin(user.email) && (
                   <Link href="/dashboard">
                     <span
-                      className={`block rounded-md px-3 py-2 text-white font-medium ${
-                        pathname === "/dashboard"
-                          ? "bg-gray-900"
-                          : ""
+                      className={`block rounded-md px-3 py-2 text-white font-medium hover:bg-gray-800 ${
+                        pathname === "/dashboard" ? "bg-gray-800" : ""
                       }`}
                     >
                       Dashboard
@@ -97,8 +95,8 @@ const Navbar = () => {
                 )}
                 <Link href="/bookings">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
-                      pathname === "/bookings" ? "bg-gray-900" : ""
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-800 ${
+                      pathname === "/bookings" ? "bg-gray-800" : ""
                     }`}
                   >
                     Bookings
@@ -106,8 +104,8 @@ const Navbar = () => {
                 </Link>
                 <Link href="/courses">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
-                      pathname === "/courses" ? "bg-gray-900" : ""
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-800 ${
+                      pathname === "/courses" ? "bg-gray-800" : ""
                     }`}
                   >
                     Courses
@@ -115,8 +113,8 @@ const Navbar = () => {
                 </Link>
                 <Link href="/about">
                   <span
-                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-900 ${
-                      pathname === "/about" ? "bg-gray-900" : ""
+                    className={`rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-800 ${
+                      pathname === "/about" ? "bg-gray-800" : ""
                     }`}
                   >
                     About
@@ -129,7 +127,7 @@ const Navbar = () => {
                       toast.info(`${user.email} logged out`);
                       router.push("/login");
                     }}
-                    className="rounded-md px-3 py-2 text-sm bg-gray-600 font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm bg-gray-600 font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                   >
                     Logout
                   </button>
@@ -137,13 +135,13 @@ const Navbar = () => {
                   <>
                     <button
                       onClick={handleLoginClick}
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                     >
                       Login
                     </button>
                     <button
                       onClick={handleSignUpClick}
-                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                     >
                       Sign Up
                     </button>
@@ -187,14 +185,14 @@ const Navbar = () => {
 
                 {showUserMenu && (
                   <div
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                   >
                     <Link href="/profile">
                       <span
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
                         Your Profile
@@ -202,7 +200,7 @@ const Navbar = () => {
                     </Link>
                     <Link href="/settings">
                       <span
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                        className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
                       >
                         Settings
@@ -210,7 +208,7 @@ const Navbar = () => {
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700"
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-200"
                     >
                       Sign out
                     </button>
@@ -239,7 +237,7 @@ const Navbar = () => {
           <Link href="/" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
-                pathname === "/" ? "bg-gray-900" : "hover:bg-gray-700"
+                pathname === "/" ? "bg-gray-800" : "hover:bg-gray-700"
               }`}
               aria-current="page"
             >
@@ -250,9 +248,7 @@ const Navbar = () => {
             <Link href="/dashboard" onClick={toggleMenu}>
               <span
                 className={`block rounded-md px-3 py-2 text-white font-medium ${
-                  pathname === "/dashboard"
-                    ? "bg-gray-900"
-                    : ""
+                  pathname === "/dashboard" ? "bg-gray-800" : ""
                 }`}
               >
                 Dashboard
@@ -262,7 +258,7 @@ const Navbar = () => {
           <Link href="/bookings" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
-                pathname === "/bookings" ? "bg-gray-900" : "hover:bg-gray-700"
+                pathname === "/bookings" ? "bg-gray-800" : "hover:bg-gray-700"
               }`}
             >
               Bookings
@@ -271,7 +267,7 @@ const Navbar = () => {
           <Link href="/courses" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
-                pathname === "/courses" ? "bg-gray-900" : "hover:bg-gray-700"
+                pathname === "/courses" ? "bg-gray-800" : "hover:bg-gray-700"
               }`}
             >
               Courses
@@ -280,7 +276,7 @@ const Navbar = () => {
           <Link href="/about" onClick={toggleMenu}>
             <span
               className={`block rounded-md px-3 py-2 text-base font-medium ${
-                pathname === "/about" ? "bg-gray-900" : "hover:bg-gray-700"
+                pathname === "/about" ? "bg-gray-800" : "hover:bg-gray-700"
               }`}
             >
               About
@@ -295,12 +291,14 @@ const Navbar = () => {
             </button>
           ) : (
             <>
-              <button
-                onClick={handleLoginClick}
-                className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
-              >
-                Login
-              </button>
+              <Link href="/login">
+                <button
+                  onClick={handleLoginClick}
+                  className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"
+                >
+                  Login
+                </button>
+              </Link>
               <button
                 onClick={handleSignUpClick}
                 className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-700"

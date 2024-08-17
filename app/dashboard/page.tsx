@@ -7,7 +7,7 @@ const DashboardPage = () => {
   const { user, isAdmin } = useAuth();
 
   return (
-    <div className="">
+    <div className="bg-gray-800 min-h-full">
     
         {user ? (
           isAdmin(user.email) ? (
@@ -21,7 +21,7 @@ const DashboardPage = () => {
             </div>
           )
         ) : (
-          <div className="text-center">
+          <div className="text-center min-h-full">
             <h1 className="text-2xl font-semibold text-blue-600">Please Log In</h1>
             <p className="mt-4 text-gray-600">
               You need to log in to access this page.

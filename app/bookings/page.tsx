@@ -4,7 +4,7 @@ import Bookings from "@/components/Bookings"
 
 const BookingsPage = () => {
   return (
-    <div>
+    <div className="p-8">
       <Bookings/>
     </div>
   )
