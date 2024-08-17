@@ -1,49 +1,64 @@
 "use client";
 
-import { useState } from 'react';
-import { firestore as db } from '../firebase/firebaseConfig'; 
-import { collection, addDoc } from 'firebase/firestore';
-import { modules } from '@/data/modules'; 
-import useAuth from '@/hooks/useAuth'; 
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import { firestore as db } from "../firebase/firebaseConfig";
+import { collection, addDoc } from "firebase/firestore";
+import { modules } from "@/data/modules";
+import useAuth from "@/hooks/useAuth";
+import { toast } from "react-toastify";
+import Loading from "./Loading";
 
 const Bookings = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [dueDate, setDueDate] = useState<string>('');
-  const { user } = useAuth();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState<string>("");
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const { user, loading } = useAuth();
 
   const handleSubmit = async () => {
     if (!selectedService || !name || !user || !dueDate || !description) return;
 
+    setSubmitLoading(true);
     try {
-      await addDoc(collection(db, 'bookings'), {
+      await addDoc(collection(db, "bookings"), {
         service: selectedService,
         name,
         email: user.email,
         description,
         dueDate: new Date(dueDate),
-        status: 'pending', 
-        paid: false, 
+        status: "pending",
+        paid: false,
         createdAt: new Date(),
       });
       toast.success("Booking added successfully");
       setSelectedService(null);
-      setName('');
-      setDescription('');
-      setDueDate('');
+      setName("");
+      setDescription("");
+      setDueDate("");
     } catch (error) {
-      console.error('Error adding document: ', error);
-      toast.error('Failed to make a booking. Please try again.');
+      console.error("Error adding document: ", error);
+      toast.error("Failed to make a booking. Please try again.");
+    } finally {
+      setSubmitLoading(false);
     }
   };
+
+  if (loading || submitLoading) {
+    return <Loading />;
+  }
 
   if (!user) {
     return (
       <div className="p-4 max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg flex flex-col justify-center items-center">
         <h1 className="text-2xl font-bold mb-4 text-gray-100">Booking</h1>
-        <p className="text-gray-400">Please <a href="/login" className="text-blue-400 underline">log in</a> to make a booking.</p>
+        <p className="text-gray-400">
+          Please{" "}
+          <a href="/login" className="text-blue-400 underline">
+            log in
+          </a>{" "}
+          to make a booking.
+        </p>
       </div>
     );
   }
@@ -53,24 +68,38 @@ const Bookings = () => {
       <h1 className="text-2xl font-bold mb-4">Book a Service</h1>
 
       <div className="mb-4">
-        <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">Select a Service</label>
+        <label
+          htmlFor="service"
+          className="block text-sm font-medium text-gray-300 mb-2"
+        >
+          Select a Service
+        </label>
         <select
           id="service"
-          value={selectedService || ''}
+          value={selectedService || ""}
           onChange={(e) => setSelectedService(e.target.value)}
           className="block w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
         >
-          <option value="" disabled className='text-gray-500'>Select a service</option>
-          {modules.flatMap((category) => category.items).map((item) => (
-            <option key={item.title} value={item.title}>
-              {item.title} - {item.price}
-            </option>
-          ))}
+          <option value="" disabled className="text-gray-500">
+            Select a service
+          </option>
+          {modules
+            .flatMap((category) => category.items)
+            .map((item) => (
+              <option key={item.title} value={item.title}>
+                {item.title} - {item.price}
+              </option>
+            ))}
         </select>
       </div>
 
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-300 mb-2"
+        >
+          Your Name
+        </label>
         <input
           type="text"
           id="name"
@@ -82,7 +111,12 @@ const Bookings = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-300 mb-2">Due Date</label>
+        <label
+          htmlFor="dueDate"
+          className="block text-sm font-medium text-gray-300 mb-2"
+        >
+          Due Date
+        </label>
         <input
           type="date"
           id="dueDate"
@@ -93,7 +127,12 @@ const Bookings = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">Additional Details</label>
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-300 mb-2"
+        >
+          Additional Details
+        </label>
         <textarea
           id="description"
           value={description}

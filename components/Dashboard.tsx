@@ -15,15 +15,18 @@ import useAuth from "../hooks/useAuth";
 import { Booking } from "@/types/types";
 import { isDueSoon } from "../helpers/utils";
 import { FaSignInAlt, FaBook } from "react-icons/fa";
+import Loading from "./Loading";
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const { user } = useAuth();
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [statusLoading, setStatusLoading] = useState<boolean>(false);
+  const { user, loading } = useAuth();
 
   useEffect(() => {
     const fetchBookings = async () => {
       if (!user) return;
-
+      setSubmitLoading(true);
       try {
         const bookingsQuery = query(
           collection(db, "bookings"),
@@ -37,6 +40,8 @@ const Dashboard = () => {
         setBookings(bookingsData);
       } catch (error) {
         console.error("Error fetching bookings: ", error);
+      } finally {
+        setSubmitLoading(false);
       }
     };
 
@@ -44,15 +49,19 @@ const Dashboard = () => {
   }, [user]);
 
   const handleDelete = async (id: string) => {
+    setSubmitLoading(true);
     try {
       await deleteDoc(doc(db, "bookings", id));
       setBookings(bookings.filter((booking) => booking.id !== id));
     } catch (error) {
       console.error("Error deleting booking: ", error);
+    } finally {
+      setSubmitLoading(false);
     }
   };
 
   const handleChangeStatus = async (id: string, status: string) => {
+    setStatusLoading(true);
     try {
       const bookingDoc = doc(db, "bookings", id);
       await updateDoc(bookingDoc, { status });
@@ -63,8 +72,14 @@ const Dashboard = () => {
       );
     } catch (error) {
       console.error("Error updating booking status: ", error);
+    } finally {
+      setStatusLoading(false);
     }
   };
+
+  if (loading || submitLoading) {
+    return <Loading />;
+  }
 
   if (!user) {
     return (
@@ -82,7 +97,9 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 min-h-full">
-      <h1 className="text-3xl font-bold mb-4 flex items-center justify-center text-white">My Bookings</h1>
+      <h1 className="text-3xl font-bold mb-4 flex items-center justify-center text-white">
+        My Bookings
+      </h1>
 
       {bookings.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full p-4 text-center">
@@ -161,19 +178,28 @@ const Dashboard = () => {
                   <td className="px-4 py-2 text-sm text-gray-900 flex space-x-2">
                     <button
                       onClick={() => handleChangeStatus(booking.id, "Paid")}
-                      className="bg-green-500 text-white px-2 py-1 rounded"
+                      className={`bg-green-500 text-white px-2 py-1 rounded ${
+                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={statusLoading}
                     >
                       Paid
                     </button>
                     <button
                       onClick={() => handleChangeStatus(booking.id, "Pending")}
-                      className="bg-yellow-500 text-white px-2 py-1 rounded"
+                      className={`bg-yellow-500 text-white px-2 py-1 rounded ${
+                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={statusLoading}
                     >
                       Pending
                     </button>
                     <button
                       onClick={() => handleChangeStatus(booking.id, "Done")}
-                      className="bg-blue-500 text-white px-2 py-1 rounded"
+                      className={`bg-blue-500 text-white px-2 py-1 rounded ${
+                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={statusLoading}
                     >
                       Done
                     </button>
@@ -181,13 +207,19 @@ const Dashboard = () => {
                       onClick={() =>
                         handleChangeStatus(booking.id, "Completed")
                       }
-                      className="bg-purple-500 text-white px-2 py-1 rounded"
+                      className={`bg-purple-500 text-white px-2 py-1 rounded ${
+                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={statusLoading}
                     >
                       Completed
                     </button>
                     <button
                       onClick={() => handleDelete(booking.id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded"
+                      className={`bg-red-500 text-white px-2 py-1 rounded ${
+                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
+                      disabled={statusLoading}
                     >
                       Delete
                     </button>

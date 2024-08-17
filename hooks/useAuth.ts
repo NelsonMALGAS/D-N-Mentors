@@ -1,15 +1,27 @@
 import { useState, useEffect, useCallback } from "react";
-import { onAuthStateChanged, User, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { auth, firestore } from "../firebase/firebaseConfig";
 import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import { UseAuthResult } from "@/types/types";
 
-const useAuth = () => {
+/**
+ * Custom hook for managing authentication state and related actions.
+ *
+ * @returns {UseAuthResult} - The authentication state and functions for handling login, sign-up, and logout.
+ */
+const useAuth = (): UseAuthResult => {
   const [user, setUser] = useState<User | null>(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [adminEmails, setAdminEmails] = useState<string[]>([]);
 
   useEffect(() => {
@@ -44,11 +56,14 @@ const useAuth = () => {
     return () => unsubscribe();
   }, []);
 
-  const isAdmin = useCallback((email: string | null): email is string => {
-    return email !== null && adminEmails.includes(email);
-  }, [adminEmails]);
+  const isAdmin = useCallback(
+    (email: string | null): email is string => {
+      return email !== null && adminEmails.includes(email);
+    },
+    [adminEmails]
+  );
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (): Promise<void> => {
     setLoading(true);
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -66,13 +81,13 @@ const useAuth = () => {
       console.error("Error during sign up:", error);
       setUser(null);
       setError("Sign up failed. Please try again.");
-      setSuccess(null); 
+      setSuccess(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (): Promise<void> => {
     setLoading(true);
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
@@ -90,13 +105,13 @@ const useAuth = () => {
       console.error("Error during login:", error);
       setUser(null);
       setError("Login failed. Please check your credentials.");
-      setSuccess(null); 
+      setSuccess(null);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     setLoading(true);
     try {
       await signOut(auth);
@@ -106,7 +121,7 @@ const useAuth = () => {
     } catch (error) {
       console.error("Error during logout:", error);
       setError("Logout failed. Please try again.");
-      setSuccess(null); 
+      setSuccess(null);
     } finally {
       setLoading(false);
     }
@@ -129,3 +144,20 @@ const useAuth = () => {
 };
 
 export default useAuth;
+
+/**
+ * @typedef {Object} UseAuthResult
+ * @property {User | null} user - The current authenticated user.
+ * @property {string} email - The email address of the user.
+ * @property {function} setEmail - Function to set the email address.
+ * @property {string} password - The password of the user.
+ * @property {function} setPassword - Function to set the password.
+ * @property {function} handleLogin - Function to handle user login.
+ * @property {function} handleSignUp - Function to handle user sign-up.
+ * @property {function} handleLogout - Function to handle user logout.
+ * @property {function} isAdmin - Function to check if a user is an admin.
+ * @property {string | null} error - Error message if any.
+ * @property {string | null} success - Success message if any.
+ * @property {boolean} loading - Loading state.
+ */
+

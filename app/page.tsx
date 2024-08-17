@@ -13,7 +13,7 @@ export default function Home() {
     return <NotAuthenticated />;
   }
 
-  if (!user && loading) {
+  if (loading) {
     return <Loading />;
   }
 
