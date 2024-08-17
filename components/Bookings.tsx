@@ -41,26 +41,26 @@ const Bookings = () => {
 
   if (!user) {
     return (
-      <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-lg flex flex-col justify-center items-center">
-        <h1 className="text-2xl font-bold mb-4 text-gray-900">Booking</h1>
-        <p className="text-gray-600">Please <a href="/login" className="text-blue-500 underline">log in</a> to make a booking.</p>
+      <div className="p-4 max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg flex flex-col justify-center items-center">
+        <h1 className="text-2xl font-bold mb-4 text-gray-100">Booking</h1>
+        <p className="text-gray-400">Please <a href="/login" className="text-blue-400 underline">log in</a> to make a booking.</p>
       </div>
     );
   }
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow-lg pt-8">
-      <h1 className="text-2xl font-bold mb-4 text-gray-900">Book a Service</h1>
+    <div className="p-4 max-w-md mx-auto bg-gray-800 text-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold mb-4">Book a Service</h1>
 
       <div className="mb-4">
-        <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">Select a Service</label>
+        <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">Select a Service</label>
         <select
           id="service"
           value={selectedService || ''}
           onChange={(e) => setSelectedService(e.target.value)}
-          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="block w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
         >
-          <option value="" disabled>Select a service</option>
+          <option value="" disabled className='text-gray-500'>Select a service</option>
           {modules.flatMap((category) => category.items).map((item) => (
             <option key={item.title} value={item.title}>
               {item.title} - {item.price}
@@ -70,36 +70,36 @@ const Bookings = () => {
       </div>
 
       <div className="mb-4">
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="block w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
           placeholder="Enter your name"
         />
       </div>
 
       <div className="mb-4">
-        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-2">Due Date</label>
+        <label htmlFor="dueDate" className="block text-sm font-medium text-gray-300 mb-2">Due Date</label>
         <input
           type="date"
           id="dueDate"
           value={dueDate}
           onChange={(e) => setDueDate(e.target.value)}
-          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="block w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
         />
       </div>
 
       <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">Additional Details</label>
+        <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">Additional Details</label>
         <textarea
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="block w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
           placeholder="Enter any additional details or requests"
           required
         />

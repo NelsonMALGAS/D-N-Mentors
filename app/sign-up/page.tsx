@@ -3,7 +3,7 @@ import AuthForm from "@/components/AuthForm"
 
 const SignUpPage = () => {
   return (
-    <div>
+    <div className="p-16">
         <AuthForm mode="signup"/>
     </div>
   )

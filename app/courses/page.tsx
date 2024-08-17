@@ -2,8 +2,8 @@ import CourseCards from "@/components/Modules"
 
 const ModulesPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6">Course Information</h1>
+    <div className="min-h-screen p-6 bg-gray-900 shadow-lg rounded-lg overflow-hidden transition-colors duration-300 border-t-4 border-gray-800">
+      <h1 className="text-4xl font-extrabold mb-6 text-white">Course Information</h1>
       <CourseCards />
     </div>
   )
