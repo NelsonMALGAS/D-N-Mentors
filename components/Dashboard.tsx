@@ -64,10 +64,17 @@ const Dashboard = () => {
     setStatusLoading(true);
     try {
       const bookingDoc = doc(db, "bookings", id);
-      await updateDoc(bookingDoc, { status });
+      const updatedFields: { status: string; paid?: boolean } = { status };
+  
+      if (status.toLowerCase() === "paid") {
+        updatedFields.paid = true;
+      }
+  
+      await updateDoc(bookingDoc, updatedFields);
+      
       setBookings(
         bookings.map((booking) =>
-          booking.id === id ? { ...booking, status } : booking
+          booking.id === id ? { ...booking, status, paid: status.toLowerCase() === "paid" } : booking
         )
       );
     } catch (error) {
@@ -76,10 +83,16 @@ const Dashboard = () => {
       setStatusLoading(false);
     }
   };
-
+  
   if (loading || submitLoading) {
     return <Loading />;
   }
+  
+  
+  if (loading || submitLoading) {
+    return <Loading />;
+  }
+  
 
   if (!user) {
     return (
