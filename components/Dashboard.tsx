@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { firestore as db } from "../firebase/firebaseConfig";
 import {
   collection,
@@ -14,13 +14,14 @@ import {
 import useAuth from "../hooks/useAuth";
 import { Booking } from "@/types/types";
 import { isDueSoon } from "../helpers/utils";
-import { FaSignInAlt, FaBook } from "react-icons/fa";
+import { FaSignInAlt, FaBook, FaArrowRight } from "react-icons/fa";
 import Loading from "./Loading";
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const [statusLoading, setStatusLoading] = useState<boolean>(false);
+  const tableRef = useRef<HTMLDivElement>(null);
   const { user, loading } = useAuth();
 
   useEffect(() => {
@@ -65,16 +66,18 @@ const Dashboard = () => {
     try {
       const bookingDoc = doc(db, "bookings", id);
       const updatedFields: { status: string; paid?: boolean } = { status };
-  
+
       if (status.toLowerCase() === "paid") {
         updatedFields.paid = true;
       }
-  
+
       await updateDoc(bookingDoc, updatedFields);
-      
+
       setBookings(
         bookings.map((booking) =>
-          booking.id === id ? { ...booking, status, paid: status.toLowerCase() === "paid" } : booking
+          booking.id === id
+            ? { ...booking, status, paid: status.toLowerCase() === "paid" }
+            : booking
         )
       );
     } catch (error) {
@@ -83,16 +86,20 @@ const Dashboard = () => {
       setStatusLoading(false);
     }
   };
-  
+
+  const handleScroll = () => {
+    if (tableRef.current) {
+      tableRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
+
   if (loading || submitLoading) {
     return <Loading />;
   }
-  
-  
+
   if (loading || submitLoading) {
     return <Loading />;
   }
-  
 
   if (!user) {
     return (
@@ -125,122 +132,130 @@ const Dashboard = () => {
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full min-h-full divide-y divide-gray-200">
-            <thead className="bg-gray-900 text-white">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Service
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Description
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Due Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-gray-800 divide-y divide-gray-200">
-              {bookings.map((booking) => (
-                <tr
-                  key={booking.id}
-                  className={isDueSoon(booking.dueDate) ? "bg-red-500" : ""}
-                >
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {booking.service}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {booking.name}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {booking.email}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {booking.description}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {booking.dueDate
-                      ? new Date(
-                          booking.dueDate.seconds * 1000
-                        ).toLocaleDateString()
-                      : "N/A"}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {new Date(
-                      booking.createdAt.seconds * 1000
-                    ).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-white truncate">
-                    {booking.status ? booking.status : "Pending"}
-                  </td>
-                  <td className="px-4 py-2 text-sm text-gray-900 flex space-x-2">
-                    <button
-                      onClick={() => handleChangeStatus(booking.id, "Paid")}
-                      className={`bg-green-500 text-white px-2 py-1 rounded ${
-                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                      disabled={statusLoading}
-                    >
-                      Paid
-                    </button>
-                    <button
-                      onClick={() => handleChangeStatus(booking.id, "Pending")}
-                      className={`bg-yellow-500 text-white px-2 py-1 rounded ${
-                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                      disabled={statusLoading}
-                    >
-                      Pending
-                    </button>
-                    <button
-                      onClick={() => handleChangeStatus(booking.id, "Done")}
-                      className={`bg-blue-500 text-white px-2 py-1 rounded ${
-                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                      disabled={statusLoading}
-                    >
-                      Done
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleChangeStatus(booking.id, "Completed")
-                      }
-                      className={`bg-purple-500 text-white px-2 py-1 rounded ${
-                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                      disabled={statusLoading}
-                    >
-                      Completed
-                    </button>
-                    <button
-                      onClick={() => handleDelete(booking.id)}
-                      className={`bg-red-500 text-white px-2 py-1 rounded ${
-                        statusLoading ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
-                      disabled={statusLoading}
-                    >
-                      Delete
-                    </button>
-                  </td>
+        <div className="relative">
+          <div className="relative overflow-x-auto" ref={tableRef}>
+            <table className="min-w-full min-h-full divide-y divide-gray-200">
+              <thead className="bg-gray-900 text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Service
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Due Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-gray-800 divide-y divide-gray-200">
+                {bookings.map((booking) => (
+                  <tr
+                    key={booking.id}
+                    className={isDueSoon(booking.dueDate) ? "bg-red-500" : ""}
+                  >
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {booking.service}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {booking.name}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {booking.email}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {booking.description}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {booking.dueDate
+                        ? new Date(
+                            booking.dueDate.seconds * 1000
+                          ).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {new Date(
+                        booking.createdAt.seconds * 1000
+                      ).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-white truncate">
+                      {booking.status ? booking.status : "Pending"}
+                    </td>
+                    <td className="px-4 py-2 text-sm text-gray-900 flex space-x-2">
+                      <button
+                        onClick={() => handleChangeStatus(booking.id, "Paid")}
+                        className={`bg-green-500 text-white px-2 py-1 rounded ${
+                          statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                        disabled={statusLoading}
+                      >
+                        Paid
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleChangeStatus(booking.id, "Pending")
+                        }
+                        className={`bg-yellow-500 text-white px-2 py-1 rounded ${
+                          statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                        disabled={statusLoading}
+                      >
+                        Pending
+                      </button>
+                      <button
+                        onClick={() => handleChangeStatus(booking.id, "Done")}
+                        className={`bg-blue-500 text-white px-2 py-1 rounded ${
+                          statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                        disabled={statusLoading}
+                      >
+                        Done
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleChangeStatus(booking.id, "Completed")
+                        }
+                        className={`bg-purple-500 text-white px-2 py-1 rounded ${
+                          statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                        disabled={statusLoading}
+                      >
+                        Completed
+                      </button>
+                      <button
+                        onClick={() => handleDelete(booking.id)}
+                        className={`bg-red-500 text-white px-2 py-1 rounded ${
+                          statusLoading ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
+                        disabled={statusLoading}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <FaArrowRight
+            className="fixed right-2 top-1/2 transform -translate-y-1/2 text-4xl text-white bg-red-600 p-2 rounded-full md:hidden shadow-lg border-2 border-white"
+            onClick={handleScroll}
+          />
         </div>
       )}
     </div>
