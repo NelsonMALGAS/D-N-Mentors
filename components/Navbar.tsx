@@ -68,6 +68,7 @@ const Navbar = () => {
                 alt="Your Company"
                 width={64}
                 height={64}
+                priority
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
@@ -222,7 +223,7 @@ const Navbar = () => {
 
       {/* Mobile menu, show/hide based on menu state. */}
       <div
-  className={`fixed inset-y-0 right-0 w-64 bg-gray-800 bg-opacity-90 text-gray-100 transform transition-transform backdrop-blur ${
+  className={`fixed inset-y-0 right-0 w-64 bg-gray-800 bg-opacity-90 text-gray-100 transform transition-transform backdrop-blur z-50 ${
     isMenuOpen ? "translate-x-0" : "translate-x-full"
   }`}
   id="mobile-menu"
