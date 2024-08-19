@@ -15,7 +15,6 @@ const Navbar = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-
   const { user, handleLogout, isAdmin } = useAuth();
 
   const toggleMenu = () => {
@@ -175,7 +174,7 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-16 w-16 rounded-full"
-                      src="https://via.placeholder.com/64x64.png?text=Profile"
+                      src={user?.photoURL || "https://via.placeholder.com/64x64.png?text=Profile"}
                       alt="Profile Picture"
                       width={64}
                       height={64}
