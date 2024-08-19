@@ -1,6 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
+import { useState , FormEvent } from 'react';
+import { firestore as db } from '../firebase/firebaseConfig'; 
+import { collection, addDoc } from 'firebase/firestore';
 
 const Contact = () => {
   const [name, setName] = useState('');
@@ -10,7 +12,7 @@ const Contact = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
 
     if (!name || !email || !message) {
@@ -22,14 +24,25 @@ const Contact = () => {
     setError(null);
     setSuccess(null);
 
-    // Simulate a successful form submission
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      
+      await addDoc(collection(db, 'contacts'), {
+        name,
+        email,
+        message,
+        createdAt: new Date()
+      });
+
       setSuccess('Your message has been sent!');
       setName('');
       setEmail('');
       setMessage('');
-    }, 1000); // Simulating network delay
+    } catch (error) {
+      console.error('Error sending message: ', error);
+      setError('There was an error sending your message.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
