@@ -137,10 +137,10 @@ const UserProfile = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6">
-      <div className="flex items-center space-x-6 mb-8">
+      <div className="flex flex-col items-center space-y-6 mb-8">
         <div className="relative">
           <Image
-            className="h-24 w-24 rounded-full border-4 border-gray-300 dark:border-gray-700"
+            className="h-24 w-24 rounded-full border-4 border-gray-300 dark:border-gray-700 object-cover"
             src={profilePicture || "https://via.placeholder.com/128x128.png?text=Profile"}
             alt="Profile Picture"
             width={128}
