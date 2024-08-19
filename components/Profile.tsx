@@ -9,14 +9,15 @@ import Link from "next/link";
 import { firestore, storage } from "../firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Modal from "react-modal";
+import Loading from "./Loading";
 
 const UserProfile = () => {
-  const { user, handleLogout } = useAuth();
+  const { user, handleLogout , loading } = useAuth();
   const [editing, setEditing] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState(user?.displayName || "");
   const [newBio, setNewBio] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [ProfileLoading, setProfileLoading] = useState(false);
   const [isBioModalOpen, setIsBioModalOpen] = useState(false);
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -57,7 +58,7 @@ const UserProfile = () => {
   const handleSave = async () => {
     if (!user) return;
 
-    setLoading(true);
+    setProfileLoading(true);
     try {
       // Update user profile
       if (newDisplayName !== user.displayName) {
@@ -74,7 +75,7 @@ const UserProfile = () => {
       setError("Error updating profile. Please try again.");
       console.error("Error updating profile:", error);
     } finally {
-      setLoading(false);
+      setProfileLoading(false);
     }
   };
 
@@ -113,7 +114,7 @@ const UserProfile = () => {
 
   if (!user) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-900 p-6">
+      <div className="flex items-center justify-center min-h-screen bg-gray-800 p-6">
         <div className="max-w-md w-full p-8 bg-gray-800 dark:bg-gray-800 rounded-lg shadow-lg text-center">
           <h1 className="text-4xl font-semibold mb-6 text-white dark:text-gray-100">
             Access Denied
@@ -132,12 +133,16 @@ const UserProfile = () => {
     );
   }
 
+  if(loading){
+    <Loading/>
+  }
+
   // Slice the bio if it exceeds 20 characters
   const bioDisplay = newBio.length > 20 ? newBio.slice(0, 20) + "..." : newBio;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6">
-      <div className="flex flex-col items-center space-y-6 mb-8">
+      <div className="flex flex-col items-center space-y-6 mb-8 bg-gray-800 p-12 rounded-md">
         <div className="relative">
           <Image
             className="h-24 w-24 rounded-full border-4 border-gray-300 dark:border-gray-700 object-cover"
@@ -222,9 +227,9 @@ const UserProfile = () => {
           <button
             onClick={handleSave}
             className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition"
-            disabled={loading}
+            disabled={ProfileLoading}
           >
-            {loading ? "Saving..." : "Save"}
+            {ProfileLoading ? "Saving..." : "Save"}
           </button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>

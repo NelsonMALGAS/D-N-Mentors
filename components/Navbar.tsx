@@ -174,7 +174,10 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-16 w-16 rounded-full"
-                      src={user?.photoURL || "https://via.placeholder.com/64x64.png?text=Profile"}
+                      src={
+                        user?.photoURL ||
+                        "https://via.placeholder.com/64x64.png?text=Profile"
+                      }
                       alt="Profile Picture"
                       width={64}
                       height={64}
@@ -194,6 +197,7 @@ const Navbar = () => {
                       <span
                         className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
+                        onClick={toggleUserMenu}
                       >
                         Your Profile
                       </span>
@@ -202,12 +206,16 @@ const Navbar = () => {
                       <span
                         className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100 hover:text-gray-900"
                         role="menuitem"
+                        onClick={toggleUserMenu}
                       >
                         Settings
                       </span>
                     </Link>
                     <button
-                      onClick={handleLogout}
+                      onClick={() => {
+                        handleLogout();
+                        toggleUserMenu();
+                      }}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-200"
                     >
                       Sign out
@@ -222,94 +230,103 @@ const Navbar = () => {
 
       {/* Mobile menu, show/hide based on menu state. */}
       <div
-  className={`fixed inset-y-0 right-0 w-64 bg-gray-800 bg-opacity-90 text-gray-100 transform transition-transform backdrop-blur z-50 ${
-    isMenuOpen ? "translate-x-0" : "translate-x-full"
-  }`}
-  id="mobile-menu"
->
-  <div className="flex items-center justify-between p-4">
-    <h2 className="text-lg font-semibold text-gray-200">Menu</h2>
-    <button type="button" className="text-gray-200" onClick={toggleMenu}>
-      <FiX className="h-6 w-6" aria-hidden="true" />
-    </button>
-  </div>
-  <div className="px-2 pb-3 pt-2 space-y-1">
-    <Link href="/" onClick={toggleMenu}>
-      <span
-        className={`block rounded-md px-3 py-2 text-base font-medium ${
-          pathname === "/" ? "bg-gray-700 text-gray-100" : "hover:bg-gray-600 text-gray-100"
+        className={`fixed inset-y-0 right-0 w-64 bg-gray-800 bg-opacity-90 text-gray-100 transform transition-transform backdrop-blur z-50 ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        aria-current="page"
+        id="mobile-menu"
       >
-        Home
-      </span>
-    </Link>
-    {user && isAdmin(user.email) && (
-      <Link href="/dashboard" onClick={toggleMenu}>
-        <span
-          className={`block rounded-md px-3 py-2 text-base font-medium ${
-            pathname === "/dashboard" ? "bg-gray-700 text-gray-100" : "hover:bg-gray-600 text-gray-100"
-          }`}
-        >
-          Dashboard
-        </span>
-      </Link>
-    )}
-    <Link href="/bookings" onClick={toggleMenu}>
-      <span
-        className={`block rounded-md px-3 py-2 text-base font-medium ${
-          pathname === "/bookings" ? "bg-gray-700 text-gray-100" : "hover:bg-gray-600 text-gray-100"
-        }`}
-      >
-        Bookings
-      </span>
-    </Link>
-    <Link href="/courses" onClick={toggleMenu}>
-      <span
-        className={`block rounded-md px-3 py-2 text-base font-medium ${
-          pathname === "/courses" ? "bg-gray-700 text-gray-100" : "hover:bg-gray-600 text-gray-100"
-        }`}
-      >
-        Courses
-      </span>
-    </Link>
-    <Link href="/about" onClick={toggleMenu}>
-      <span
-        className={`block rounded-md px-3 py-2 text-base font-medium ${
-          pathname === "/about" ? "bg-gray-700 text-gray-100" : "hover:bg-gray-600 text-gray-100"
-        }`}
-      >
-        About
-      </span>
-    </Link>
-    {user ? (
-      <button
-        onClick={handleLogout}
-        className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
-      >
-        Logout
-      </button>
-    ) : (
-      <>
-        <Link href="/login">
-          <button
-            onClick={handleLoginClick}
-            className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
-          >
-            Login
+        <div className="flex items-center justify-between p-4">
+          <h2 className="text-lg font-semibold text-gray-200">Menu</h2>
+          <button type="button" className="text-gray-200" onClick={toggleMenu}>
+            <FiX className="h-6 w-6" aria-hidden="true" />
           </button>
-        </Link>
-        <button
-          onClick={handleSignUpClick}
-          className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
-        >
-          Sign Up
-        </button>
-      </>
-    )}
-  </div>
-</div>
-
+        </div>
+        <div className="px-2 pb-3 pt-2 space-y-1">
+          <Link href="/" onClick={toggleMenu}>
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/"
+                  ? "bg-gray-700 text-gray-100"
+                  : "hover:bg-gray-600 text-gray-100"
+              }`}
+              aria-current="page"
+            >
+              Home
+            </span>
+          </Link>
+          {user && isAdmin(user.email) && (
+            <Link href="/dashboard" onClick={toggleMenu}>
+              <span
+                className={`block rounded-md px-3 py-2 text-base font-medium ${
+                  pathname === "/dashboard"
+                    ? "bg-gray-700 text-gray-100"
+                    : "hover:bg-gray-600 text-gray-100"
+                }`}
+              >
+                Dashboard
+              </span>
+            </Link>
+          )}
+          <Link href="/bookings" onClick={toggleMenu}>
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/bookings"
+                  ? "bg-gray-700 text-gray-100"
+                  : "hover:bg-gray-600 text-gray-100"
+              }`}
+            >
+              Bookings
+            </span>
+          </Link>
+          <Link href="/courses" onClick={toggleMenu}>
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/courses"
+                  ? "bg-gray-700 text-gray-100"
+                  : "hover:bg-gray-600 text-gray-100"
+              }`}
+            >
+              Courses
+            </span>
+          </Link>
+          <Link href="/about" onClick={toggleMenu}>
+            <span
+              className={`block rounded-md px-3 py-2 text-base font-medium ${
+                pathname === "/about"
+                  ? "bg-gray-700 text-gray-100"
+                  : "hover:bg-gray-600 text-gray-100"
+              }`}
+            >
+              About
+            </span>
+          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link href="/login">
+                <button
+                  onClick={handleLoginClick}
+                  className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
+                >
+                  Login
+                </button>
+              </Link>
+              <button
+                onClick={handleSignUpClick}
+                className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
+        </div>
+      </div>
     </nav>
   );
 };
