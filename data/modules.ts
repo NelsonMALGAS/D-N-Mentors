@@ -53,6 +53,7 @@ export const modules: Category[] = [
       { title: 'React.js', price: 'Rates upon request', description: 'Introduction to React.js' },
       { title: 'Next.js', price: 'Rates upon request', description: 'Introduction to Next.js' },
       { title: 'Tailwind CSS', price: 'Rates upon request', description: 'Introduction to Tailwind CSS' },
+      { title: 'Bootstrap', price: 'Rates upon request', description: 'Introduction to Bootstrap' },
       { title: 'Material UI', price: 'Rates upon request', description: 'Introduction to Material UI' },
       { title: 'Next UI', price: 'Rates upon request', description: 'Introduction to Next UI' },
       { title: 'Firebase', price: 'Rates upon request', description: 'Introduction to Firebase' },

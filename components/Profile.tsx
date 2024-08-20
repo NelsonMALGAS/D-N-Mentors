@@ -10,9 +10,10 @@ import { firestore, storage } from "../firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Modal from "react-modal";
 import Loading from "./Loading";
+import { FaChevronDown } from "react-icons/fa";
 
 const UserProfile = () => {
-  const { user, handleLogout , loading } = useAuth();
+  const { user, handleLogout, loading } = useAuth();
   const [editing, setEditing] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState(user?.displayName || "");
   const [newBio, setNewBio] = useState("");
@@ -39,7 +40,10 @@ const UserProfile = () => {
           setProfilePicture(user.photoURL);
         } else {
           // If no photoURL in user object, try to get it from storage
-          const storageRef = ref(storage, `profilePictures/${user.uid}/profile-picture`);
+          const storageRef = ref(
+            storage,
+            `profilePictures/${user.uid}/profile-picture`
+          );
           try {
             const url = await getDownloadURL(storageRef);
             setProfilePicture(url);
@@ -97,7 +101,10 @@ const UserProfile = () => {
     if (!file || !user) return;
 
     setUploading(true);
-    const storageRef = ref(storage, `profilePictures/${user.uid}/profile-picture`);
+    const storageRef = ref(
+      storage,
+      `profilePictures/${user.uid}/profile-picture`
+    );
 
     try {
       await uploadBytes(storageRef, file);
@@ -133,26 +140,32 @@ const UserProfile = () => {
     );
   }
 
-  if(loading){
-    <Loading/>
+  if (loading) {
+    <Loading />;
   }
 
   // Slice the bio if it exceeds 20 characters
   const bioDisplay = newBio.length > 20 ? newBio.slice(0, 20) + "..." : newBio;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-0">
       <div className="flex flex-col items-center space-y-6 mb-8 bg-gray-800 p-12 rounded-md">
         <div className="relative">
           <Image
             className="h-24 w-24 rounded-full border-4 border-gray-300 dark:border-gray-700 object-cover"
-            src={profilePicture || "https://via.placeholder.com/128x128.png?text=Profile"}
+            src={
+              profilePicture ||
+              "https://via.placeholder.com/128x128.png?text=Profile"
+            }
             alt="Profile Picture"
             width={128}
             height={128}
             priority
           />
-          <label htmlFor="profilePicture" className="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition cursor-pointer">
+          <label
+            htmlFor="profilePicture"
+            className="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition cursor-pointer"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -184,10 +197,11 @@ const UserProfile = () => {
           </p>
           {newBio && (
             <p
-              className="text-gray-600 dark:text-gray-300 text-lg mt-2 cursor-pointer"
+              className="text-gray-600 dark:text-gray-300 text-lg mt-2 cursor-pointer flex items-center space-x-2 border border-gray-500 dark:border-gray-700 p-2 rounded-md"
               onClick={openBioModal}
             >
               {bioDisplay}
+              <FaChevronDown className="text-gray-400 dark:text-gray-500 ml-2" />
             </p>
           )}
         </div>

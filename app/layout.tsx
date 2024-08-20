@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-gray-900`}>
         <Navbar />
-        <main>
+        <main className="pt-32">
           {children}
           <ToastContainer
             position="top-right"

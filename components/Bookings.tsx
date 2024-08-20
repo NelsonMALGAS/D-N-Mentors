@@ -6,7 +6,6 @@ import { collection, addDoc } from "firebase/firestore";
 import { modules } from "@/data/modules";
 import useAuth from "@/hooks/useAuth";
 import { toast } from "react-toastify";
-import Loading from "./Loading";
 
 const Bookings = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -14,7 +13,7 @@ const Bookings = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState<string>("");
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   const handleSubmit = async () => {
     if (!selectedService || !name || !user || !dueDate || !description) return;
@@ -44,9 +43,9 @@ const Bookings = () => {
     }
   };
 
-  if (loading || submitLoading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   if (!user) {
     return (
@@ -83,13 +82,23 @@ const Bookings = () => {
           <option value="" disabled className="text-gray-500">
             Select a service
           </option>
-          {modules
-            .flatMap((category) => category.items)
-            .map((item) => (
-              <option key={item.title} value={item.title}>
-                {item.title} - {item.price}
-              </option>
-            ))}
+          {modules.map((category) => (
+            <optgroup
+              key={category.category}
+              label={category.category}
+              className="text-white bg-gray-700 p-2 m-2"
+            >
+              {category.items.map((item) => (
+                <option
+                  key={item.title}
+                  value={item.title}
+                  className="bg-gray-800 text-gray-100 hover:bg-gray-700"
+                >
+                  {item.title} - {item.price}
+                </option>
+              ))}
+            </optgroup>
+          ))}
         </select>
       </div>
 
@@ -146,9 +155,12 @@ const Bookings = () => {
 
       <button
         onClick={handleSubmit}
-        className="w-full py-2 px-4 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className={`w-full py-2 px-4 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+          submitLoading ? "blur-sm cursor-not-allowed" : ""
+        }`}
+        disabled={submitLoading}
       >
-        Submit Booking
+        {submitLoading ? "Submitting..." : "Submit Booking"}
       </button>
     </div>
   );
