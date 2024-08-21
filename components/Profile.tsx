@@ -235,13 +235,13 @@ const UserProfile = () => {
             placeholder="New display name"
             value={newDisplayName}
             onChange={(e) => setNewDisplayName(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-transparent"
+            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-transparent text-white"
           />
           <textarea
             placeholder="New bio"
             value={newBio}
             onChange={(e) => setNewBio(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-transparent resize-none"
+            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-transparent resize-none text-white"
           />
           <div className="flex space-x-4">
             <button
