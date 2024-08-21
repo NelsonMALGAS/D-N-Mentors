@@ -14,7 +14,16 @@ import {
 import useAuth from "../hooks/useAuth";
 import { Booking } from "@/types/types";
 import { isDueSoon } from "../helpers/utils";
-import { FaSignInAlt, FaBook, FaArrowRight } from "react-icons/fa";
+import {
+  FaSignInAlt,
+  FaBook,
+  FaArrowRight,
+  FaCheck,
+  FaHourglassHalf,
+  FaCheckCircle,
+  FaCheckDouble,
+  FaTrash,
+} from "react-icons/fa";
 import Loading from "./Loading";
 
 const Dashboard = () => {
@@ -196,56 +205,46 @@ const Dashboard = () => {
                     <td className="px-4 py-2 text-sm text-white truncate">
                       {booking.status ? booking.status : "Pending"}
                     </td>
-                    <td className="px-4 py-2 text-sm text-gray-900 flex space-x-2">
-                      <button
+                    <td className="px-4 py-2 text-sm text-gray-900 flex space-x-6">
+                      <FaCheck
                         onClick={() => handleChangeStatus(booking.id, "Paid")}
-                        className={`bg-green-500 text-white px-2 py-1 rounded ${
+                        className={`cursor-pointer text-green-500 ${
                           statusLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
-                        disabled={statusLoading}
-                      >
-                        Paid
-                      </button>
-                      <button
+                        title="Paid"
+                      />
+                      <FaHourglassHalf
                         onClick={() =>
                           handleChangeStatus(booking.id, "Pending")
                         }
-                        className={`bg-yellow-500 text-white px-2 py-1 rounded ${
+                        className={`cursor-pointer text-yellow-500 ${
                           statusLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
-                        disabled={statusLoading}
-                      >
-                        Pending
-                      </button>
-                      <button
+                        title="Pending"
+                      />
+                      <FaCheckCircle
                         onClick={() => handleChangeStatus(booking.id, "Done")}
-                        className={`bg-blue-500 text-white px-2 py-1 rounded ${
+                        className={`cursor-pointer text-blue-500 ${
                           statusLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
-                        disabled={statusLoading}
-                      >
-                        Done
-                      </button>
-                      <button
+                        title="Done"
+                      />
+                      <FaCheckDouble
                         onClick={() =>
                           handleChangeStatus(booking.id, "Completed")
                         }
-                        className={`bg-purple-500 text-white px-2 py-1 rounded ${
+                        className={`cursor-pointer text-purple-500 ${
                           statusLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
-                        disabled={statusLoading}
-                      >
-                        Completed
-                      </button>
-                      <button
+                        title="Completed"
+                      />
+                      <FaTrash
                         onClick={() => handleDelete(booking.id)}
-                        className={`bg-red-500 text-white px-2 py-1 rounded ${
+                        className={`cursor-pointer text-gray-500 ${
                           statusLoading ? "opacity-50 cursor-not-allowed" : ""
                         }`}
-                        disabled={statusLoading}
-                      >
-                        Delete
-                      </button>
+                        title="Delete"
+                      />
                     </td>
                   </tr>
                 ))}
