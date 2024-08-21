@@ -252,7 +252,7 @@ const UserProfile = () => {
         isOpen={isBioModalOpen}
         onRequestClose={closeBioModal}
         contentLabel="Bio Modal"
-        className="bg-gray-900 text-gray-100 p-6 mx-auto my-10 max-w-lg rounded-lg shadow-lg"
+        className="bg-gray-900 text-gray-100 p-6 mx-auto my-10 max-w-lg rounded-lg shadow-lg pt-36"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50"
       >
         <h2 className="text-2xl font-semibold mb-4">Full Bio</h2>
