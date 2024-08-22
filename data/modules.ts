@@ -13,12 +13,12 @@ export const modules: Category[] = [
   {
     category: 'Services',
     items: [
-      { title: 'KCQs', price: 'First Year: 200, Second Year: 250, Third Year: 350', description: 'Project Resource and Procurement Management' },
-      { title: 'Exams', price: 'First Year: 200, Second Year: 250, Third Year: 350', description: 'Business Mathematics' },
-      { title: 'Assignments', price: 'First Year: 200, Second Year: 250, Third Year: 350', description: 'Business Finance' },
-      { title: 'Projects', price: 'First Year: 200, Second Year: 250, Third Year: 350', description: 'Financial Accounting' },
+      { title: 'KCQs', price: 'R500', description: 'Project Resource and Procurement Management' },
+      { title: 'Exams', price: 'R500', description: 'Business Mathematics' },
+      { title: 'Assignments', price: 'R500', description: 'Business Finance' },
+      { title: 'Projects', price: 'R500', description: 'Financial Accounting' },
       { title: 'Private Classes (per hour)', price: 'Rates upon request', description: 'Financial Reporting and Analysis' },
-      { title: 'Homework', price: 'Rates upon request', description: 'Economics 1A' }
+      { title: 'Homework', price: 'R500', description: 'Economics 1A' }
     ]
   },
   {

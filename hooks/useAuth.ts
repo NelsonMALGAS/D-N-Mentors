@@ -145,19 +145,5 @@ const useAuth = (): UseAuthResult => {
 
 export default useAuth;
 
-/**
- * @typedef {Object} UseAuthResult
- * @property {User | null} user - The current authenticated user.
- * @property {string} email - The email address of the user.
- * @property {function} setEmail - Function to set the email address.
- * @property {string} password - The password of the user.
- * @property {function} setPassword - Function to set the password.
- * @property {function} handleLogin - Function to handle user login.
- * @property {function} handleSignUp - Function to handle user sign-up.
- * @property {function} handleLogout - Function to handle user logout.
- * @property {function} isAdmin - Function to check if a user is an admin.
- * @property {string | null} error - Error message if any.
- * @property {string | null} success - Success message if any.
- * @property {boolean} loading - Loading state.
- */
+
 

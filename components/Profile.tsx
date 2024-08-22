@@ -23,10 +23,12 @@ const UserProfile = () => {
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [profileFetched, setProfileFetched] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!user) return;
+      if (!user || profileFetched) return;
+
       try {
         // Fetch user's bio from Firestore
         const userDoc = doc(firestore, "bios", user.uid);
@@ -42,22 +44,25 @@ const UserProfile = () => {
           // If no photoURL in user object, try to get it from storage
           const storageRef = ref(
             storage,
-            `profilePictures/${user.uid}/profile-picture`
+            `profile/${user.uid}/profile-picture`
           );
           try {
             const url = await getDownloadURL(storageRef);
             setProfilePicture(url);
           } catch (err) {
             console.error("Error fetching profile picture URL:", err);
+            setProfilePicture("https://via.placeholder.com/128x128.png?text=Profile");
           }
         }
       } catch (err) {
         console.error("Error fetching user data:", err);
+      } finally {
+        setProfileFetched(true);
       }
     };
 
     fetchUserData();
-  }, [user]);
+  }, [user, profileFetched]);
 
   const handleSave = async () => {
     if (!user) return;
@@ -103,7 +108,7 @@ const UserProfile = () => {
     setUploading(true);
     const storageRef = ref(
       storage,
-      `profilePictures/${user.uid}/profile-picture`
+      `profile/${user.uid}/profile-picture`
     );
 
     try {
@@ -114,6 +119,7 @@ const UserProfile = () => {
       setFile(null);
     } catch (error) {
       console.error("Error uploading profile picture:", error);
+      setError("Error uploading profile picture. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -235,57 +241,49 @@ const UserProfile = () => {
             placeholder="New display name"
             value={newDisplayName}
             onChange={(e) => setNewDisplayName(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-transparent text-white"
+            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4"
           />
           <textarea
             placeholder="New bio"
             value={newBio}
             onChange={(e) => setNewBio(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-transparent resize-none text-white"
+            className="border border-gray-300 dark:border-gray-700 rounded-md p-3 w-full mb-4"
           />
-          <div className="flex space-x-4">
-            <button
-              onClick={handleSave}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
-              disabled={ProfileLoading}
-            >
-              {ProfileLoading ? "Saving..." : "Save"}
-            </button>
-            <button
-              onClick={() => setEditing(false)}
-              className="bg-gray-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-gray-600 transition"
-            >
-              Cancel
-            </button>
-          </div>
-          {error && (
-            <p className="text-red-500 text-sm mt-4">{error}</p>
-          )}
+          <button
+            onClick={handleSave}
+            className="bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition"
+          >
+            Save
+          </button>
         </div>
       )}
       <Modal
         isOpen={isBioModalOpen}
         onRequestClose={closeBioModal}
         contentLabel="Bio Modal"
-        className="Modal bg-gray-800 p-8 rounded-lg shadow-lg"
-        overlayClassName="Overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        className="bg-gray-800 text-gray-100 p-4 rounded-md"
       >
-        <h2 className="text-2xl font-semibold mb-4 text-gray-100">Full Bio</h2>
-        <p className="text-gray-100 text-lg">{newBio}</p>
+        <h2 className="text-xl font-semibold mb-4">Bio</h2>
+        <p>{newBio}</p>
         <button
           onClick={closeBioModal}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
+          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition"
         >
           Close
         </button>
       </Modal>
-      {uploading && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-4 rounded-lg shadow-lg">
-            <p className="text-lg font-medium text-gray-900">Uploading...</p>
-          </div>
-        </div>
-      )}
+      <div className="flex flex-col items-center mt-6">
+        
+        {file && !uploading && (
+          <button
+            onClick={handleUpload}
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
+          >
+            {uploading ? "Uploading..." : "Upload"}
+          </button>
+        )}
+      </div>
+      {uploading ? "Uploading..." : ""}
     </div>
   );
 };
