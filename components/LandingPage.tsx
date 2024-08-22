@@ -15,8 +15,11 @@ const LandingPage = () => {
       <section className="bg-gray-800 text-white py-16 flex items-center justify-center">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-            Welcome to D.K Modisane & N.Z Malgas
+            Welcome to D & N Tutor Mentor Organization
           </h1>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+            D.K Modisane & N.Z Malgas
+          </h2>
           <div className="flex justify-center">
             <p className="text-lg md:text-xl mb-6 max-w-[600px]">
               Empowering minds, shaping futures: Your path to academic

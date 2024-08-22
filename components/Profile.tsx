@@ -11,6 +11,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Modal from "react-modal";
 import Loading from "./Loading";
 import { FaChevronDown } from "react-icons/fa";
+import Uploading from "./Uploading";
 
 const UserProfile = () => {
   const { user, handleLogout, loading } = useAuth();
@@ -283,7 +284,7 @@ const UserProfile = () => {
           </button>
         )}
       </div>
-      {uploading ? "Uploading..." : ""}
+      {uploading ? <Uploading/> : ""}
     </div>
   );
 };
