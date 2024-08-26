@@ -262,16 +262,33 @@ const UserProfile = () => {
         isOpen={isBioModalOpen}
         onRequestClose={closeBioModal}
         contentLabel="Bio Modal"
-        className="bg-gray-800 text-gray-100 p-4 rounded-md mt-36 mx-2"
+        className="fixed inset-0 flex mt-36 p-4 max-w-[400px] max-h-[300px] flex-col mx-auto justify-center bg-gray-900 rounded-lg text-white"
+         overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity"
       >
-        <h2 className="text-xl font-semibold mb-4">Bio</h2>
-        <p>{newBio}</p>
-        <button
-          onClick={closeBioModal}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition"
-        >
-          Close
-        </button>
+          <div className="relative bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 rounded-lg shadow-lg max-w-[400px] max-h-[300px] p-6 mx-auto text-white">
+    <button
+      onClick={closeBioModal}
+      className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M10 8.586l3.536-3.536a1 1 0 111.414 1.414L11.414 10l3.536 3.536a1 1 0 01-1.414 1.414L10 11.414l-3.536 3.536a1 1 0 01-1.414-1.414L8.586 10 5.05 6.464a1 1 0 111.414-1.414L10 8.586z" clipRule="evenodd" />
+      </svg>
+    </button>
+    <h2 className="text-2xl font-extrabold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-500">
+      Your Bio
+    </h2>
+    <p className="text-gray-300 mb-4 text-center leading-relaxed text-lg">
+      {newBio}
+    </p>
+    <div className="flex justify-center">
+      <button
+        onClick={closeBioModal}
+        className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+      >
+        Close
+      </button>
+    </div>
+  </div>
       </Modal>
       <div className="flex flex-col items-center mt-6">
         
