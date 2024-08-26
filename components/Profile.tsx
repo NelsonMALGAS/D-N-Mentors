@@ -262,7 +262,7 @@ const UserProfile = () => {
         isOpen={isBioModalOpen}
         onRequestClose={closeBioModal}
         contentLabel="Bio Modal"
-        className="bg-gray-800 text-gray-100 p-4 rounded-md"
+        className="bg-gray-800 text-gray-100 p-4 rounded-md mt-36 mx-2"
       >
         <h2 className="text-xl font-semibold mb-4">Bio</h2>
         <p>{newBio}</p>

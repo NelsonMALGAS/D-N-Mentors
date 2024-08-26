@@ -13,6 +13,7 @@ export const PRICES = {
   'Next UI': 'R700',
   Firebase: 'R1500',
   MongoDB: 'R1500',
+  Supabase : "R1500"
 };
 
 
@@ -82,8 +83,6 @@ export const modules: Category[] = [
       { title: 'Project Scope and Scheduling', price: PRICE, description: 'Defining project scope and creating schedules to ensure timely project completion.' },
       { title: 'Managing Project Risk', price: PRICE, description: 'Identifying, analyzing, and mitigating risks associated with project management.' },
       { title: 'Procurement Management', price: PRICE, description: 'Strategies and processes for acquiring goods and services for projects and organizations.' },
-  
-
     ],
     
   },
@@ -101,7 +100,8 @@ export const modules: Category[] = [
       { title: 'Material UI', price: PRICES['Material UI'], description: 'Introduction to Material UI' },
       { title: 'Next UI', price: PRICES['Next UI'], description: 'Introduction to Next UI' },
       { title: 'Firebase', price: PRICES.Firebase, description: 'Introduction to Firebase' },
-      { title: 'MongoDB', price: PRICES.MongoDB, description: 'Introduction to MongoDB' }
+      { title: 'MongoDB', price: PRICES.MongoDB, description: 'Introduction to MongoDB' },
+      { title: 'Superbase', price: PRICES.Supabase, description: 'Introduction to Supabase' },
     ]
   }
 ];

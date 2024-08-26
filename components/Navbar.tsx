@@ -30,13 +30,6 @@ const Navbar = () => {
     setShowUserMenu(!showUserMenu);
   };
 
-  const handleLoginClick = () => {
-    router.push("/");
-  };
-
-  const handleSignUpClick = () => {
-    router.push("/sign-up");
-  };
 
   return (
     <nav className="bg-gray-900 fixed top-0 w-full z-50 p-8">
@@ -136,14 +129,14 @@ const Navbar = () => {
                   <>
                     <Link href="/login">
                       <button
-                        onClick={handleLoginClick}
+                        onClick={toggleMenu}
                         className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         Login
                       </button>
                     </Link>
                     <button
-                      onClick={handleSignUpClick}
+                      onClick={toggleMenu}
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                     >
                       Sign Up
@@ -314,7 +307,7 @@ const Navbar = () => {
             <>
               <Link href="/login">
                 <button
-                  onClick={handleLoginClick}
+                  onClick={toggleMenu}
                   className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
                 >
                   Login
@@ -322,7 +315,7 @@ const Navbar = () => {
               </Link>
              <Link href="/sign-up">
              <button
-                onClick={handleSignUpClick}
+                onClick={toggleMenu}
                 className="block w-full text-left rounded-md px-3 py-2 text-base font-medium hover:bg-gray-600 text-gray-100"
               >
                 Sign Up
