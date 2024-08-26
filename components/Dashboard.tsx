@@ -25,6 +25,7 @@ import {
   FaTrash,
 } from "react-icons/fa";
 import Loading from "./Loading";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -59,12 +60,21 @@ const Dashboard = () => {
   }, [user]);
 
   const handleDelete = async (id: string) => {
+    // Show confirmation dialog
+    const confirmed = window.confirm("Are you sure you want to delete the booking?");
+  
+    if (!confirmed) {
+      return;
+    }
+  
     setSubmitLoading(true);
     try {
       await deleteDoc(doc(db, "bookings", id));
-      setBookings(bookings.filter((booking) => booking.id !== id));
+      setBookings((prevBookings) => prevBookings.filter((booking) => booking.id !== id));
+      toast.success("Booking deleted successfully");
     } catch (error) {
       console.error("Error deleting booking: ", error);
+      toast.error("Failed to delete booking. Please try again.");
     } finally {
       setSubmitLoading(false);
     }
@@ -102,11 +112,7 @@ const Dashboard = () => {
     }
   };
 
-  if (loading || submitLoading) {
-    return <Loading />;
-  }
-
-  if (loading || submitLoading) {
+  if (loading) {
     return <Loading />;
   }
 

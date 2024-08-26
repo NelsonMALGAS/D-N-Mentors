@@ -82,10 +82,8 @@ export const modules: Category[] = [
       { title: 'Project Scope and Scheduling', price: PRICE, description: 'Defining project scope and creating schedules to ensure timely project completion.' },
       { title: 'Managing Project Risk', price: PRICE, description: 'Identifying, analyzing, and mitigating risks associated with project management.' },
       { title: 'Procurement Management', price: PRICE, description: 'Strategies and processes for acquiring goods and services for projects and organizations.' },
-      { title: 'Business Mathematics', price: PRICE, description: 'Mathematical methods applied to various business scenarios, including financial calculations and data analysis.' },
-      { title: 'Financial Accounting', price: PRICE, description: 'Accounting principles for recording and reporting financial transactions and generating financial statements.' },
-      { title: 'Financial Reporting and Analysis', price: PRICE, description: 'Techniques for analyzing financial reports to assess organizational performance and financial stability.' },
-      { title: 'Economics 1A', price: PRICE, description: 'Basic economic concepts and theories, including market mechanisms and economic decision-making processes.' },
+  
+
     ],
     
   },

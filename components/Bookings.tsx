@@ -6,6 +6,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { modules } from "@/data/modules";
 import useAuth from "@/hooks/useAuth";
 import { toast } from "react-toastify";
+import Modal from "./Modal";
+import { BookingData } from "@/types/types";
 
 const Bookings = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -13,6 +15,8 @@ const Bookings = () => {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState<string>("");
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [bookingData, setBookingData] = useState< BookingData | null>(null);
   const { user } = useAuth();
 
   const handleSubmit = async () => {
@@ -31,6 +35,17 @@ const Bookings = () => {
         createdAt: new Date(),
       });
       toast.success("Booking added successfully");
+
+      // Set the booking data for the modal
+      setBookingData({
+        service: selectedService,
+        name,
+        email: user.email || "",
+        dueDate,
+        description,
+      });
+
+      setShowModal(true);
       setSelectedService(null);
       setName("");
       setDescription("");
@@ -43,9 +58,9 @@ const Bookings = () => {
     }
   };
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   if (!user) {
     return (
@@ -82,9 +97,9 @@ const Bookings = () => {
           <option value="" disabled className="text-gray-500">
             Select a service
           </option>
-          {modules.map((category) => (
+          {modules.map((category, index) => (
             <optgroup
-              key={category.category}
+              key={index}
               label={category.category}
               className="text-white bg-gray-700 p-2 m-2"
             >
@@ -162,6 +177,11 @@ const Bookings = () => {
       >
         {submitLoading ? "Submitting..." : "Submit Booking"}
       </button>
+      <Modal
+        isVisible={showModal}
+        onClose={closeModal}
+        bookingData={bookingData}
+      />
     </div>
   );
 };

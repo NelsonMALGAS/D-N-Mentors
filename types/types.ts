@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { Dispatch, SetStateAction } from "react";
+import { ComponentType, Dispatch, SetStateAction, SVGProps } from "react";
 
 /**
  * Represents the configuration options for initializing Firebase.
@@ -31,6 +31,7 @@ export interface FirebaseConfig {
 export interface Tab {
   name: string;
   key: string;
+  icon?: ComponentType<SVGProps<SVGSVGElement>> 
 }
 
 /**
@@ -85,4 +86,19 @@ export interface UseAuthResult {
   error: string | null;
   success: string | null;
   loading: boolean;
+}
+
+export interface BookingData {
+  service: string | null;
+  name: string;
+  email: string;
+  dueDate: string;
+  description: string;
+}
+
+
+export interface ModalProps {
+  isVisible: boolean;
+  onClose: () => void;
+  bookingData: BookingData | null;
 }
