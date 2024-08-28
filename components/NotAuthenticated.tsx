@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaLock } from "react-icons/fa";
 
 const NotAuthenticated = () => {
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-900 p-4">
       <div className="max-w-sm p-6 bg-gradient-to-r from-gray-800 via-gray-900 to-black rounded-lg shadow-lg text-center">
@@ -17,11 +18,10 @@ const NotAuthenticated = () => {
             <FaLock className="mr-2" />
             Go to Login Page
           </span>
-          {/* <span className="absolute inset-0 rounded-lg bg-blue-600 opacity-50 blur-sm transition-opacity group-hover:opacity-100"></span> */}
         </Link>
       </div>
     </div>
   );
-};
+}
 
 export default NotAuthenticated;
