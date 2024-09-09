@@ -1,12 +1,19 @@
+"use client";
+
+import { FaBriefcase, FaChartPie, FaBullhorn, FaCogs, FaDollarSign, FaChartLine, FaClipboardList } from "react-icons/fa";
+
 const AboutUs = () => {
   return (
     <div className="p-6 bg-gray-900 min-h-screen">
       <section className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-extrabold text-center text-white mb-8">About Us</h1>
+        <h1 className="text-4xl font-extrabold text-center text-white mb-8">About Us</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Executive Summary Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1 lg:col-span-3">
+            <div className="flex items-center justify-center mb-4">
+              <FaBriefcase className="text-4xl text-blue-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Executive Summary</h2>
             <p className="leading-relaxed">
               Kelebogile Doctor Modisane &amp; Nelson Zongezile Malgas Tutor and
@@ -23,6 +30,9 @@ const AboutUs = () => {
 
           {/* Business Description Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1">
+            <div className="flex items-center justify-center mb-4">
+              <FaClipboardList className="text-4xl text-green-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Business Description</h2>
             <p className="leading-relaxed">
               Kelebogile Doctor Modisane &amp; Nelson Zongezile Malgas Tutor and
@@ -38,6 +48,9 @@ const AboutUs = () => {
 
           {/* Market Analysis Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1">
+            <div className="flex items-center justify-center mb-4">
+              <FaChartPie className="text-4xl text-orange-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Market Analysis</h2>
             <p className="leading-relaxed">
               The demand for academic support services continues to grow as
@@ -53,9 +66,10 @@ const AboutUs = () => {
 
           {/* Marketing and Sales Strategy Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1">
-            <h2 className="text-2xl font-bold mb-4">
-              Marketing and Sales Strategy
-            </h2>
+            <div className="flex items-center justify-center mb-4">
+              <FaBullhorn className="text-4xl text-yellow-500" />
+            </div>
+            <h2 className="text-2xl font-bold mb-4">Marketing and Sales Strategy</h2>
             <p className="leading-relaxed">
               We will employ a multi-channel marketing approach to reach our
               target audience, including online advertising, social media
@@ -70,6 +84,9 @@ const AboutUs = () => {
 
           {/* Operations Plan Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1 lg:col-span-3">
+            <div className="flex items-center justify-center mb-4">
+              <FaCogs className="text-4xl text-teal-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Operations Plan</h2>
             <p className="leading-relaxed">
               Our operations will be streamlined to ensure efficiency and
@@ -86,6 +103,9 @@ const AboutUs = () => {
 
           {/* Financial Plan Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1 lg:col-span-2">
+            <div className="flex items-center justify-center mb-4">
+              <FaDollarSign className="text-4xl text-pink-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Financial Plan</h2>
             <p className="leading-relaxed">
               We project steady revenue growth over the next three years as we
@@ -101,6 +121,9 @@ const AboutUs = () => {
 
           {/* Growth Strategy Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1">
+            <div className="flex items-center justify-center mb-4">
+              <FaChartLine className="text-4xl text-purple-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Growth Strategy</h2>
             <p className="leading-relaxed">
               As we grow our organization, we will focus on expanding our
@@ -115,6 +138,9 @@ const AboutUs = () => {
 
           {/* Conclusion Card */}
           <div className="bg-gray-800 text-white shadow-lg rounded-lg p-6 border border-gray-700 hover:shadow-xl transition-shadow duration-300 col-span-1 lg:col-span-3">
+            <div className="flex items-center justify-center mb-4">
+              <FaClipboardList className="text-4xl text-indigo-500" />
+            </div>
             <h2 className="text-2xl font-bold mb-4">Conclusion</h2>
             <p className="leading-relaxed">
               Kelebogile Doctor Modisane &amp; Nelson Zongezile Malgas Tutor and

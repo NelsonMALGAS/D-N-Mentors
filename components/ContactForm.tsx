@@ -3,26 +3,24 @@
 import { useState , FormEvent } from 'react';
 import { firestore as db } from '../firebase/firebaseConfig'; 
 import { collection, addDoc } from 'firebase/firestore';
+import { toast} from "react-toastify"
 
 const Contact = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  
 
   const handleSubmit = async (e:FormEvent) => {
     e.preventDefault();
 
     if (!name || !email || !message) {
-      setError('Please fill out all fields.');
+      toast.error('Please fill out all fields.')
       return;
     }
 
     setLoading(true);
-    setError(null);
-    setSuccess(null);
 
     try {
       
@@ -33,13 +31,13 @@ const Contact = () => {
         createdAt: new Date()
       });
 
-      setSuccess('Your message has been sent!');
+      toast.success('Your message has been sent!')
       setName('');
       setEmail('');
       setMessage('');
     } catch (error) {
       console.error('Error sending message: ', error);
-      setError('There was an error sending your message.');
+      toast.error('There was an error sending your message.')
     } finally {
       setLoading(false);
     }
@@ -49,9 +47,6 @@ const Contact = () => {
     <div className="p-6 max-w-md mx-auto bg-gray-800 shadow-md rounded-lg">
       <h2 className="text-2xl font-bold mb-4 text-white">Contact Us</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {success && <p className="text-green-600">{success}</p>}
-        {error && <p className="text-red-600">{error}</p>}
-        
         <div>
           <label htmlFor="name" className="block text-gray-700">Name</label>
           <input

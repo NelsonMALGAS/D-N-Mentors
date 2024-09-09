@@ -8,6 +8,8 @@ import useAuth from "@/hooks/useAuth";
 import { toast } from "react-toastify";
 import Modal from "./Modal";
 import { BookingData } from "@/types/types";
+import Link from "next/link";
+import { FaRegSmileWink, FaSignInAlt } from "react-icons/fa";
 
 const Bookings = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -43,6 +45,7 @@ const Bookings = () => {
         email: user.email || "",
         dueDate,
         description,
+        date: new Date()
       });
 
       setShowModal(true);
@@ -64,19 +67,32 @@ const Bookings = () => {
 
   if (!user) {
     return (
-      <div className="p-4 max-w-md mx-auto bg-gray-800 rounded-lg shadow-lg flex flex-col justify-center items-center">
-        <h1 className="text-2xl font-bold mb-4 text-gray-100">Booking</h1>
-        <p className="text-gray-400">
-          Please{" "}
-          <a href="/login" className="text-blue-400 underline">
-            log in
-          </a>{" "}
-          to make a booking.
+      <div className="p-6 max-w-md mx-auto bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl shadow-2xl flex flex-col justify-center items-center text-center transition-transform transform">
+        <h1 className="text-4xl font-extrabold mb-4 text-gray-100 flex items-center gap-2">
+          Booking
+          <FaRegSmileWink className="text-yellow-400 animate-pulse" />
+        </h1>
+        <p className="text-gray-300 mb-4 text-lg">
+          Oops! It looks like you're not logged in.
         </p>
+        <p className="text-gray-400 mb-6 text-lg">
+          Don’t miss out on our awesome services.
+        </p>
+        <Link href="/login" passHref>
+          <span className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold shadow-lg hover:bg-blue-600 transition-colors">
+            Log in now
+            <FaSignInAlt className="ml-2" />
+          </span>
+        </Link>
+        <div className="mt-6 bg-gray-700 p-5 rounded-lg text-gray-300 shadow-inner">
+          <p className="leading-relaxed">
+            Unlock access to personalized sessions and ensure your spot is
+            reserved. It’s quick, easy, and worth it!
+          </p>
+        </div>
       </div>
     );
   }
-
   return (
     <div className="p-4 max-w-md mx-auto bg-gray-800 text-white rounded-lg shadow-lg">
       <h1 className="text-2xl font-bold mb-4">Book a Service</h1>

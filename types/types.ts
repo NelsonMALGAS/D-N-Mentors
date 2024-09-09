@@ -94,6 +94,7 @@ export interface BookingData {
   email: string;
   dueDate: string;
   description: string;
+  date : Date
 }
 
 

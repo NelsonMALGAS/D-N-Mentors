@@ -101,7 +101,7 @@ export const modules: Category[] = [
       { title: 'Next UI', price: PRICES['Next UI'], description: 'Introduction to Next UI' },
       { title: 'Firebase', price: PRICES.Firebase, description: 'Introduction to Firebase' },
       { title: 'MongoDB', price: PRICES.MongoDB, description: 'Introduction to MongoDB' },
-      { title: 'Superbase', price: PRICES.Supabase, description: 'Introduction to Supabase' },
+      { title: 'Supabase', price: PRICES.Supabase, description: 'Introduction to Supabase' },
     ]
   }
 ];

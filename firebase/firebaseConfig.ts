@@ -12,7 +12,7 @@ let storage: FirebaseStorage;
 let firestore: Firestore;
 
 if (typeof window !== 'undefined') {
-  // Your Firebase configuration object
+
   const firebaseConfig: FirebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY as string,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN as string,

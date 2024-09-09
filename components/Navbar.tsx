@@ -129,7 +129,6 @@ const Navbar = () => {
                   <>
                     <Link href="/login">
                       <button
-                        onClick={toggleMenu}
                         className="rounded-md px-3 py-2 text-sm font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
                       >
                         Login
@@ -196,15 +195,6 @@ const Navbar = () => {
                         onClick={toggleUserMenu}
                       >
                         Your Profile
-                      </span>
-                    </Link>
-                    <Link href="/settings">
-                      <span
-                        className="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-100 hover:text-gray-900"
-                        role="menuitem"
-                        onClick={toggleUserMenu}
-                      >
-                        Settings
                       </span>
                     </Link>
                     <button

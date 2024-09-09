@@ -5,6 +5,7 @@ import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
+import { validateEmail } from "@/helpers/utils";
 
 const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
   const { email, setEmail, password, setPassword, handleLogin, handleSignUp, error, success } = useAuth();
@@ -24,6 +25,11 @@ const AuthForm = ({ mode }: { mode: "login" | "signup" }) => {
   }, [error, success, router]);
 
   const handleSubmit = async () => {
+
+    if (!validateEmail(email)) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
     setIsSubmitting(true);
     try {
       if (mode === "login") {
