@@ -34,4 +34,4 @@ Contact Us
 
 Social Media
 
-- Follow us on [insert social media platforms]
+
