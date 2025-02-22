@@ -1,23 +1,28 @@
 {
-    "id": "2",
     "name": "Doctor & Nelson Tutor Mentor Organization",
-    "short_name": "D&N Tutor Mentor Organization",
+    "short_name": "D&N",
     "description": "Kelebogile Doctor Modisane Tutor and Mentor Organization provides a wide range of modules to cater to the diverse needs of students. These modules cover subjects such as business mathematics, finance, accounting, economics, public administration, project management, and more. We offer services including KCQs (Key Concept Questions), exams preparation, assignments assistance, project guidance, private classes, and homework support.",
+    "theme_color": "60a5fa",
+    "background_color": "#f0f9ff",
+    "display": "standalone",
+    "orientation": "any",
+    "scope": "/",
+    "start_url": "/",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png",
-            "sizes": "192x192",
+            "src": "/icons-192.png",
             "type": "image/png",
-            "purpose": "any maskable"
+            "sizes": "192x192"
         },
         {
-            "src": "/android-chrome-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
+            "src": "/icons-256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/icons-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
         }
-    ],
-    "theme_color": "#60a5fa",
-    "background_color": "#f0f9ff",
-    "start_url": "/",
-    "display": "standalone"
+    ]
 }

@@ -57,7 +57,7 @@ const Navbar = () => {
             <div className="flex flex-shrink-0 items-center">
               <Image
                 className="h-20 w-20 rounded-full"
-                src="/images/logo-pic.jpeg"
+                src="/images/logo.webp"
                 alt="Your Company"
                 width={64}
                 height={64}
